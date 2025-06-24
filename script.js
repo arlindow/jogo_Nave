@@ -2,23 +2,32 @@
 var canvas = document.getElementById('meu_canvas');
 var context = canvas.getContext('2d');
 
-// Iniciar o caminho (apaga desenhos anteriores)
+// Primeiro arco:
+// Novo path
 context.beginPath();
 
-// Desenhar uma estrela
-context.moveTo(75,250); // Ponto Inicial
-context.lineTo(150,50);
-context.lineTo(225,250);
-context.lineTo(50,120);
-context.lineTo(250,120);
-context.lineTo(75,250);
+// Desenha
+context.arc(50,50,40,90*Math.PI/180, 270*Math.PI/180, false);
 
-// Configurar linha
-context.lineWidth = 2;
-context.strokeStyle = 'red';
+// Preenchimento
+context.fill();
 
-// Traçar as linhas do caminho
+// Contorno
 context.stroke();
+
+// Segundo  - iniciar novo Path - Dois arcos desenhados juntos no mesmo path:um é a continuação do outro!
+context.beginPath(); 
+context.arc(150, 50, 40, 90*Math.PI/180, 270*Math.PI/180,
+true);
+context.fill();
+context.stroke();
+
+// Circunferência completa
+context.beginPath();
+context.arc(250, 50, 40, 0, 2*Math.PI);
+context.fill();
+context.stroke();
+
 
 
 
