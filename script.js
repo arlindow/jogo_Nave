@@ -2,32 +2,17 @@
 var canvas = document.getElementById('meu_canvas');
 var context = canvas.getContext('2d');
 
-// Primeiro arco:
-// Novo path
-context.beginPath();
-
-// Desenha
-context.arc(50,50,40,90*Math.PI/180, 270*Math.PI/180, false);
-
-// Preenchimento
-context.fill();
-
-// Contorno
-context.stroke();
-
-// Segundo  - iniciar novo Path - Dois arcos desenhados juntos no mesmo path:um é a continuação do outro!
-context.beginPath(); 
-context.arc(150, 50, 40, 90*Math.PI/180, 270*Math.PI/180,
-true);
-context.fill();
-context.stroke();
-
-// Circunferência completa
-context.beginPath();
-context.arc(250, 50, 40, 0, 2*Math.PI);
-context.fill();
-context.stroke();
-
-
-
-
+// carregar a imagem
+var imagem = new Image();
+imagem.src = 'img/ovni.png';
+imagem.onload = function () {
+    // começar na posição 20
+    var x = 20;
+    // desenhar as imagens
+    for (var i = 1; i <= 5; i++){
+        context.drawImage(imagem, x, 20, 64, 32);
+        x += 70;
+        // Ampliando para o dobro do tamanho
+        //context.drawImage(imagem, x, 20, 128, 64);
+    }
+}
