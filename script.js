@@ -2,15 +2,23 @@
 var canvas = document.getElementById('meu_canvas');
 var context = canvas.getContext('2d');
 
-// carregar a imagem
-var imagem = new Image();
-imagem.src = 'img/explosao.png';
-imagem.onload = function () {
-    context.drawImage(
-    imagem,
-    80, 10, 60, 65, // Área de recorte (clipping)
-    20, 20, 60, 65 // Desenho no Canvas
-    );
-        
-    }
+// Métodos save e restore
+// Um pequeno quadrado verde
+context.fillStyle = 'green';
+context.fillRect(50,50,25,25);
+
+// Salvamos a configuração e subimos na pilha
+context.save();
+
+// Agora um quadrado roxo
+context.fillStyle = 'purple';
+context.fillRect(100, 50, 25, 25);
+
+// Voltamos para o nível anterior na pilha
+context.restore();
+
+// Voltou para o verde!
+context.fillRect(150, 50, 25, 25);
+
+
 
