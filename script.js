@@ -2,23 +2,26 @@
 var canvas = document.getElementById('meu_canvas');
 var context = canvas.getContext('2d');
 
-// Métodos save e restore
-// Um pequeno quadrado verde
-context.fillStyle = 'green';
-context.fillRect(50,50,25,25);
+// Dados da bola
+var x = 20;
+var y = 100;
+var raio = 5;
 
-// Salvamos a configuração e subimos na pilha
-context.save();
+// Iniciar a animação
+requestAnimationFrame(mexerBola);
 
-// Agora um quadrado roxo
-context.fillStyle = 'purple';
-context.fillRect(100, 50, 25, 25);
-
-// Voltamos para o nível anterior na pilha
-context.restore();
-
-// Voltou para o verde!
-context.fillRect(150, 50, 25, 25);
-
-
-
+// Função de animação
+function mexerBola() {
+    // Aqui uma bolinha se deslocará
+    // Limpar o Canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    // Desenhar a bola
+    context.beginPath();
+    context.arc(x, y, raio, 0, Math.PI*2);
+    context.fill();
+    // Deslocar 20 pixels para a direita
+    x += 20;
+    // Chamar o próximo ciclo da animação
+    requestAnimationFrame(mexerBola);
+    
+}
