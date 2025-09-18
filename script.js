@@ -1,29 +1,24 @@
-// Canvas e contexto
-var canvas = document.getElementById('canvas_animacao');
+// um listener para o evento keydown, que desloca um “personagem”
+var canvas = document.getElementById('canvas_teclado_1');
 var context = canvas.getContext('2d');
 
-// Criando alguns sprites
-var b1 = new Bola(context);
-b1.x = 100;
-b1.y = 200;
-b1.velocidadeX = 20;
-b1.velocidadeY = -10;
-b1.cor = 'red';
-b1.raio = 20; 
+// Posição inicial do personagem
+var posicao = 0;
+desenharPersonagem();
 
-var b2 = new Bola(context);
-b2.x = 200;
-b2.y = 100;
-b2.velocidadeX = -10;
-b2.velocidadeY = 20;
-b2.cor = 'blue';
-b2.raio = 30;
-
-// Criando o loop de animação
-var animacao = new Animacao(context);
-animacao.novoSprite(b1);
-animacao.novoSprite(b2);
-
-// "ligar a animacao"
-animacao.ligar();
-
+document.addEventListener('keydown', function (evento){
+    if (evento.keyCode == 37) {
+        posicao -= 10;
+        desenharPersonagem();
+    }
+    else if (evento.keyCode == 39) {
+        posicao += 10;
+        desenharPersonagem();
+    }
+});
+    
+// Um personagem não muito simpático, mas...
+function desenharPersonagem() {
+context.clearRect(0, 0, canvas.width, canvas.height);
+context.fillRect(posicao, 100, 20, 50);
+}
