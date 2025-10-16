@@ -1,21 +1,24 @@
-// um listener para o evento keydown, que desloca um “personagem”
-var canvas = document.getElementById('canvas_teclado_1');
+// referenciando canvas
+var canvas = document.getElementById('canvas_teclado_2');
 var context = canvas.getContext('2d');
 
 // Posição inicial do personagem
 var posicao = 0;
 desenharPersonagem();
 
-document.addEventListener('keydown', function (evento){
-    if (evento.keyCode == 37) {
+var teclado = new Teclado(document); 
+
+
+requestAnimationFrame(animar);
+
+function animar() {
+    if (teclado.pressionada(SETA_ESQUERDA))
         posicao -= 10;
-        desenharPersonagem();
-    }
-    else if (evento.keyCode == 39) {
+    else if (teclado.pressionada(SETA_DIREITA))
         posicao += 10;
-        desenharPersonagem();
-    }
-});
+    desenharPersonagem();
+    requestAnimationFrame(animar);
+}
     
 // Um personagem não muito simpático, mas...
 function desenharPersonagem() {
