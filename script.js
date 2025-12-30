@@ -1,27 +1,20 @@
 // referenciando canvas
-var canvas = document.getElementById('canvas_teclado_2');
+var canvas = document.getElementById('canvas_teclado_3');
 var context = canvas.getContext('2d');
 
-// Posição inicial do personagem
-var posicao = 0;
-desenharPersonagem();
+var teclado = new Teclado(document);
+var animacao = new Animacao(context);
 
-var teclado = new Teclado(document); 
+// Sprite
+var heroi = new Heroi(context, teclado, animacao);
+heroi.x = 0;
+heroi.y = 100;
 
+animacao.novoSprite(heroi);
 
-requestAnimationFrame(animar);
+teclado.disparou(ESPACO, function () {
+    heroi.atirar();
+});
 
-function animar() {
-    if (teclado.pressionada(SETA_ESQUERDA))
-        posicao -= 10;
-    else if (teclado.pressionada(SETA_DIREITA))
-        posicao += 10;
-    desenharPersonagem();
-    requestAnimationFrame(animar);
-}
-    
-// Um personagem não muito simpático, mas...
-function desenharPersonagem() {
-context.clearRect(0, 0, canvas.width, canvas.height);
-context.fillRect(posicao, 100, 20, 50);
-}
+// Inicia o loop do jogo
+animacao.ligar();

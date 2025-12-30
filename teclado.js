@@ -1,25 +1,47 @@
 // arquivo: teclado.js
-// Códigos de teclas - aqui vão todos os que forem necessários
+// Códigos de teclas
 var SETA_ESQUERDA = 37;
 var SETA_DIREITA = 39;
+var ESPACO = 32;
 
 function Teclado(elemento) {
     this.elemento = elemento;
 
-    // Array de teclas pressionadas
     this.pressionadas = [];
-    // Registrando o estado das teclas no array
+    this.disparadas = [];
+    this.funcoesDisparo = [];
+
     var teclado = this;
-    elemento.addEventListener('keydown', function(evento) {
-    teclado.pressionadas[evento.keyCode] = true;
-});
-    elemento.addEventListener('keyup', function(evento) {
+
+    // KEYDOWN
+    elemento.addEventListener('keydown', function (evento) {
+        var tecla = evento.keyCode;
+
+        teclado.pressionadas[tecla] = true;
+
+        // Dispara apenas uma vez por pressionamento
+        if (teclado.funcoesDisparo[tecla] &&
+            !teclado.disparadas[tecla]) {
+
+            teclado.disparadas[tecla] = true;
+            teclado.funcoesDisparo[tecla]();
+        }
+    });
+
+    // KEYUP
+    elemento.addEventListener('keyup', function (evento) {
         teclado.pressionadas[evento.keyCode] = false;
-});
-}
-Teclado.prototype = {
-    pressionada: function(tecla) {
-        return this.pressionadas[tecla];
-}
+        teclado.disparadas[evento.keyCode] = false;
+    });
 }
 
+// PROTOTYPE
+Teclado.prototype = {
+    pressionada: function (tecla) {
+        return this.pressionadas[tecla];
+    },
+
+    disparou: function (tecla, callback) {
+        this.funcoesDisparo[tecla] = callback;
+    }
+};
