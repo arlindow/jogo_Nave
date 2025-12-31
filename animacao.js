@@ -17,6 +17,14 @@ class Animacao {
         this.ligado = true;      // Marca como ligada
         this.proximoFrame();     // Chama o loop de animação
     }
+    
+    excluirSprite(sprite) {
+        const index = this.sprites.indexOf(sprite);
+        if (index !== -1) {
+            this.sprites.splice(index, 1);
+        }
+    }
+
 
     // Desliga a animação
     desligar() {

@@ -1,8 +1,10 @@
 // ===== Classe Bola =====
 class Bola {
     // O constructor define os atributos da bola
-    constructor(context) {
+    constructor(context, animacao) {
         this.context = context;     // Contexto do canvas
+        this.animacao = animacao; 
+
         this.x = 0;                 // Posição horizontal
         this.y = 0;                 // Posição vertical
         this.velocidadeX = 0;       // Velocidade horizontal
@@ -13,32 +15,30 @@ class Bola {
 
     // Atualiza a posição da bola e trata colisão com as bordas
     atualizar() {
-        const ctx = this.context;
-
-        // Colisão horizontal: inverte a velocidade se bater nas bordas
-        if (this.x < this.raio || this.x > ctx.canvas.width - this.raio) {
-            this.velocidadeX *= -1;
-        }
-
-        // Colisão vertical: inverte a velocidade se bater nas bordas
-        if (this.y < this.raio || this.y > ctx.canvas.height - this.raio) {
-            this.velocidadeY *= -1;
-        }
-
-        // Atualiza posição somando a velocidade
+        // MOVE O TIRO
         this.x += this.velocidadeX;
         this.y += this.velocidadeY;
+
+        // REMOVE AO SAIR DA TELA
+        if (
+            this.x < 0 ||
+            this.x > this.context.canvas.width ||
+            this.y < 0 ||
+            this.y > this.context.canvas.height
+        ) {
+            this.animacao.excluirSprite(this);
+        }
     }
 
-    // Desenha a bola no canvas
     desenhar() {
-        const ctx = this.context;
+    const ctx = this.context;
+    ctx.save();
 
-        ctx.save();                     // Salva o estado atual do canvas
-        ctx.fillStyle = this.cor;       // Define a cor da bola
-        ctx.beginPath();                // Inicia um novo caminho
-        ctx.arc(this.x, this.y, this.raio, 0, 2 * Math.PI, false); // Desenha um círculo
-        ctx.fill();                     // Preenche o círculo
-        ctx.restore();                  // Restaura o estado anterior do canvas
-    }
+    ctx.fillStyle = this.cor;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.raio, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+}
 }
