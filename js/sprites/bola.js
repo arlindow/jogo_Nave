@@ -1,5 +1,5 @@
 // ===== Classe Bola =====
-class Bola {
+export default class Bola {
     // O constructor define os atributos da bola
     constructor(context, animacao) {
         this.context = context;     // Contexto do canvas
